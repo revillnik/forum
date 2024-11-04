@@ -1,0 +1,10 @@
+[
+	{ "model": "main.tags", "pk": 1, "fields": { "tag_name": "animals", "slug": "animals" } },
+	{ "model": "main.tags", "pk": 2, "fields": { "tag_name": "human", "slug": "human" } },
+	{ "model": "main.tags", "pk": 3, "fields": { "tag_name": "people", "slug": "people" } },
+	{ "model": "main.tags", "pk": 4, "fields": { "tag_name": "cat", "slug": "cat" } },
+	{ "model": "main.tags", "pk": 5, "fields": { "tag_name": "dog", "slug": "dog" } },
+	{ "model": "main.tags", "pk": 6, "fields": { "tag_name": "nature", "slug": "nature" } },
+	{ "model": "main.tags", "pk": 7, "fields": { "tag_name": "leaves", "slug": "leaves" } },
+	{ "model": "main.tags", "pk": 8, "fields": { "tag_name": "food", "slug": "food" } }
+]

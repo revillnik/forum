@@ -1,0 +1,56 @@
+[
+	{
+		"model": "auth.user",
+		"pk": 1,
+		"fields": {
+			"password": "pbkdf2_sha256$600000$TzTYoEFUyYbUOC34ULPBav$9Wat19psA8eFVkpj4vmk/Zqs+zOaHaOXEya57oMFJFY=",
+			"last_login": "2024-10-23T18:02:50.387Z",
+			"is_superuser": true,
+			"username": "root",
+			"first_name": "═шъшЄр",
+			"last_name": "╚трэют",
+			"email": "revillnik@mail.ru",
+			"is_staff": true,
+			"is_active": true,
+			"date_joined": "2024-09-27T23:04:15.976Z",
+			"groups": [],
+			"user_permissions": []
+		}
+	},
+	{
+		"model": "auth.user",
+		"pk": 7,
+		"fields": {
+			"password": "pbkdf2_sha256$600000$7KsNciwro5rFlcnfCFG6pY$ha2wswdsdLJt3jHrbl6PaEbB7sbVdQjxK7pVeDYg7Z0=",
+			"last_login": "2024-10-23T17:38:20.536Z",
+			"is_superuser": false,
+			"username": "revill",
+			"first_name": "═шъшЄр",
+			"last_name": "╚трэют",
+			"email": "revill@mail.ru",
+			"is_staff": false,
+			"is_active": true,
+			"date_joined": "2024-10-14T19:28:47Z",
+			"groups": [],
+			"user_permissions": [25, 26, 28]
+		}
+	},
+	{
+		"model": "auth.user",
+		"pk": 8,
+		"fields": {
+			"password": "pbkdf2_sha256$600000$mapLbrmckHs3a94J9lu4Ob$MSn2VfQyXPcVx6soMuEgsC2IopA67mp2lbMPTno6fhg=",
+			"last_login": "2024-10-23T17:37:52.231Z",
+			"is_superuser": false,
+			"username": "revillnik",
+			"first_name": "═шъшЄр",
+			"last_name": "╚трэют",
+			"email": "revillnik2@mail.ru",
+			"is_staff": false,
+			"is_active": true,
+			"date_joined": "2024-10-15T20:21:51Z",
+			"groups": [],
+			"user_permissions": []
+		}
+	}
+]

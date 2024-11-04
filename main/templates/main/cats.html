@@ -1,0 +1,10 @@
+<ul class="categories">
+	<li><a href={% url "index" %} {% if cat_selected == "all_cat" %} style='color:#007bff' {% endif %}> All posts<span {% if cat_selected == "all_cat" %} style='color:#007bff' {% endif %}> {{ count_posts }} </span></a></li>
+{% if all_cats %}
+	{% for c in all_cats %}
+	{% if c.cats.all %} 
+	<li><a href="{{ c.get_absolute_url }}" {% if cat_selected == c %} style='color:#007bff' {% endif %}>{{c.cat_name}} <span {% if cat_selected == c %} style='color:#007bff' {% endif %}>{{ c.cats.count }}</span></a></li>
+	{% endif %}
+	{% endfor %}
+</ul>
+{% endif %}

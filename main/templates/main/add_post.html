@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+		<div id="colorlib-main">
+			<section class="ftco-section contact-section px-md-4">
+	      <div class="container">
+			  <h1 class="h3" style =" text-align: center">{{ title }}</h1>
+	        <div class="row block-9" style="justify-content: space-around">
+	          <div class="col-lg-6 d-flex" style="flex: 0 0 70%; max-width: 70%">
+	            <form action="#" class="bg-light p-5 contact-form" method = "POST" enctype="multipart/form-data">
+						{% csrf_token %}
+						{{ form.non_field_errors }}
+						{% for f in form %}
+	              <div class="form-group">
+						{% if f.label == "Теги" or f.label == "Изображение для главной страницы"%} <label for="{{ f.id_for_label }}">{{f.label}}: </label> 
+						{% elif f.label == "Главное фото" and f.value.url %}<p><img src={{f.value.url}} style=" width:100px "><p>
+						{% endif %}
+	                {{f}}
+	              </div>
+					  {{ f.errors }}
+						{% endfor %}
+	              <div class="form-group">
+	                <input type="submit" value="Save" class="btn btn-primary py-3 px-5">
+	              </div>
+	            </form>
+	          </div>
+	        </div>
+	      </div>
+	    </section>
+		</div><!-- END COLORLIB-MAIN -->
+	</div><!-- END COLORLIB-PAGE -->
+{% endblock %}

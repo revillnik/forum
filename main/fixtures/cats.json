@@ -1,0 +1,6 @@
+[
+	{ "model": "main.categories", "pk": 2, "fields": { "cat_name": "Technology", "slug": "Technology" } },
+	{ "model": "main.categories", "pk": 3, "fields": { "cat_name": "Travel", "slug": "Travel" } },
+	{ "model": "main.categories", "pk": 4, "fields": { "cat_name": "Food", "slug": "Food" } },
+	{ "model": "main.categories", "pk": 5, "fields": { "cat_name": "Photography", "slug": "Photography" } }
+]

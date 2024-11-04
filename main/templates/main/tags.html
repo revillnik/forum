@@ -1,0 +1,9 @@
+{% if all_tags %}
+<ul class="tagcloud">
+	{% for t in all_tags %}
+	{% if t.tags.all %}
+	<a href="{{ t.get_absolute_url }}" class="tag-cloud-link" {% if tag_selected == t%} style='color:#007bff' {% endif %}>{{t.tag_name}}</a>
+	{% endif %}
+	{% endfor %}
+</ul>
+{% endif %}

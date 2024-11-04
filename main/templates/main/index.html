@@ -1,0 +1,92 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load tags %}
+{% block content %}
+		<div id="colorlib-main">
+			<section class="ftco-section ftco-no-pt ftco-no-pb">
+	    	<div class="container">
+	    		<div class="row d-flex">
+	    			<div class="col-xl-8 py-5 px-md-5">
+	    				<div class="row pt-md-4">
+								<div class="col-md-12">
+									{% for p in posts %}
+										<div class="blog-entry ftco-animate d-md-flex">
+											<a href={{ p.get_absolute_url }} class="img img-2" style="background-image: url({% if p.title_photo %} {{ p.title_photo.url }} {% else %} {% static 'main/images/image_12.jpg' %} {% endif %});"></a>
+													<div class="text text-2 pl-md-4">
+														<h3 class="mb-2"><a href={{ p.get_absolute_url }}>{{p.title}}</a></h3>
+														<div class="meta-wrap">
+																<p class="meta">
+																	<span><i class="icon-calendar mr-2"></i>{{ p.time_create|date:"d-m-Y" }} </span>
+																	<span>
+																	{% for t in p.tags.all %} 
+																	<a href={{ t.get_absolute_url }}>{% if forloop.first %}<i class="icon-folder-o mr-2">{% endif %}</i>{{t}}</a>
+																	{% if not forloop.last %},{% endif %}
+																	{% endfor %}
+																	</span>
+																	<span><i class="icon-comment2 mr-2"></i>{{ p.comments.all.count }} Comment</span>
+																</p>
+														</div>
+														<p class="mb-4">{{content|truncatechars:100}}</p>
+														<a href={{ p.get_absolute_url }} class="btn-custom">Read <span class="ion-ios"> &nbsp&nbsp{% if user.is_authenticated and user == p.author or user.is_superuser %} / &nbsp&nbsp{% endif %}</span></a>
+														{% if user.is_authenticated and user == p.author or user.is_superuser or perms.main.change_posts %}
+														<a href={% url "edit_post" p.slug %} class="btn-custom">Edit <span class="ion-ios"></span></a></p>
+														{% endif %}
+													{% if user.is_authenticated and user == p.author or user.is_superuser or perms.main.delete_posts %}
+													<form action = {% url "delete_post" p.slug %} method ="POST">{% csrf_token %} <input type="submit" value="delete" class="btn btn-primary"></form>
+													{% endif %}
+													</div>
+										</div>
+									{% endfor %}
+								</div>
+			    		</div><!-- END-->
+			    		<div class="row">
+			          <div class="col">
+			            <div class="block-27">
+								{% if page_obj.has_other_pages  %}
+			              <ul>
+								{% if page_obj.has_previous %}
+			                <li><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+								{% endif %}
+								 {% for p in paginator.page_range %}
+								 {% if p >= page_obj.number|add:-2  and p <= page_obj.number|add:2 %}
+			                <li {% if p == page_obj.number %} class="active" {% endif %}><a href="?page={{ p }}" >{{ p }}</a></li>
+								 {% endif %}
+								 {% endfor %}
+								{% if page_obj.has_next %}
+			                <li><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+								{% endif %}
+			              </ul>
+							  {% endif %}
+			            </div>
+			          </div>
+			        </div>
+			    	</div>
+	    			<div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
+	            <div class="sidebar-box pt-md-4">
+	              <form action="#" class="search-form" method = "GET">
+	                <div class="form-group">
+	                  <span class="icon icon-search"></span>
+	                  <input type="text" class="form-control" name = "filter"  {% if filter %} value = {{filter}} placeholder="Type a keyword and hit enter" {% endif %} placeholder="Type a keyword and hit enter">
+	                </div>
+	              </form>
+	            </div>
+	            <div class="sidebar-box ftco-animate">
+	            	<h3 class="sidebar-heading">Categories</h3>
+						{% get_all_cats cat_selected %}
+	            </div>
+	            <div class="sidebar-box ftco-animate">
+	              <h3 class="sidebar-heading">Tag Cloud</h3>
+					  {% get_all_tags tag_selected %}
+	            </div>
+	            <div class="sidebar-box ftco-animate">
+	              <h3 class="sidebar-heading">Paragraph</h3>
+	              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
+	            </div>
+	          </div><!-- END COL -->
+	    		</div>
+	    	</div>
+	    </section>
+		 
+		</div>
+
+{% endblock %}

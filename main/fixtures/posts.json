@@ -1,0 +1,86 @@
+[
+	{
+		"model": "main.posts",
+		"pk": 23,
+		"fields": {
+			"title": "Восьмая статья",
+			"content": "╪хёЄр  ёЄрЄ№ ",
+			"title_photo": "photos/2024/10/08/13-133860_wedding-rings-post-wedding-wedding-dress-patterns.png",
+			"slug": "shestaya",
+			"time_create": "2024-10-08T17:26:11.247Z",
+			"cats": null,
+			"author": null,
+			"tags": [1, 3, 4]
+		}
+	},
+	{
+		"model": "main.posts",
+		"pk": 24,
+		"fields": {
+			"title": "Девятая статья ",
+			"content": "╤хф№ьр  ёЄрЄ№ ",
+			"title_photo": "photos/2024/10/11/13-133860_wedding-rings-post-wedding-wedding-dress-patterns.png",
+			"slug": "sedmaya",
+			"time_create": "2024-10-10T21:34:35.469Z",
+			"cats": 5,
+			"author": null,
+			"tags": [1, 3]
+		}
+	},
+	{
+		"model": "main.posts",
+		"pk": 26,
+		"fields": {
+			"title": "Четвертая статья ",
+			"content": "┬юё№ьр  ёЄрЄ№ ",
+			"title_photo": "photos/2024/10/11/klipartz.com_3_qUeBBJw.png",
+			"slug": "vosmaya",
+			"time_create": "2024-10-10T21:38:15.318Z",
+			"cats": 2,
+			"author": null,
+			"tags": [2]
+		}
+	},
+	{
+		"model": "main.posts",
+		"pk": 27,
+		"fields": {
+			"title": "Вторая статья ",
+			"content": "─хт Єр  ёЄрЄ№ ",
+			"title_photo": "photos/2024/10/11/klipartz.com_3_LgYb9le.png",
+			"slug": "devatyas",
+			"time_create": "2024-10-10T21:40:11.431Z",
+			"cats": 5,
+			"author": null,
+			"tags": [2, 5]
+		}
+	},
+	{
+		"model": "main.posts",
+		"pk": 41,
+		"fields": {
+			"title": "─хё Єр  ёЄрЄ№ ",
+			"content": "─хё Єр  ёЄрЄ№ ",
+			"title_photo": "",
+			"slug": "desyataya_statya",
+			"time_create": "2024-10-12T23:48:10.827Z",
+			"cats": 3,
+			"author": null,
+			"tags": [2]
+		}
+	},
+	{
+		"model": "main.posts",
+		"pk": 43,
+		"fields": {
+			"title": "╬фшээрфЎрЄр  ёЄрЄ№ ",
+			"content": "╬фшээрфЎрЄр  ёЄрЄ№ ",
+			"title_photo": "",
+			"slug": "odinnadcataya_statya",
+			"time_create": "2024-10-14T19:30:34.684Z",
+			"cats": 4,
+			"author": null,
+			"tags": [2]
+		}
+	}
+]
