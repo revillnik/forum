@@ -1,5 +1,5 @@
 name: First action integration test
-run-name: ${{github.actor}} is testing
+run-name: ${{ github.actor }} is testing
 on: [push]
 jobs:
   test_forum:
@@ -9,10 +9,5 @@ jobs:
     steps:
       - name: setup Python
         uses: actions/setup-python@v5
-      - name: downoland repo
-        uses: actions/checkout@v4
-        with:
-         repository: ${{ github.repository }}
-
 
 				
