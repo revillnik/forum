@@ -17,3 +17,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
          python-version: "3.12"
+      - name: install dependens
+        run: |
+         python3 -m pip install --upgrade pip
+         pip install -r requirements.txt
+      - name: test forum
+        run: |
+         python3 manage.py test				
