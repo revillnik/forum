@@ -1,13 +1,18 @@
 name: First action integration test
 run-name: ${{ github.actor }} is testing
-on: [push]
+on:
+  push:
+   branches:
+     - master
 jobs:
   test_forum:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
     steps:
+      - name: downoland repo
+        uses: actions/checkout@v4
+        with:
+         repository: ${{ github.repository }}
       - name: setup Python
-        uses: actions/setup-python
+        uses: actions/setup-python@v5
 
 				
