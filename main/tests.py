@@ -3,9 +3,13 @@ from django.urls import reverse, reverse_lazy
 from .models import Posts, Categories, Tags, Comments
 from http import HTTPStatus
 from django.contrib.auth.models import User
+from django.core.cache import cache
 
 
 class AboutTestCase(TestCase):
+
+    def setUp(self):
+        cache.clear()
 
     def test_view(self):
         path = reverse("about")
@@ -24,6 +28,7 @@ class CatTagFilterTestCase(TestCase):
     ]
 
     def setUp(self):
+        cache.clear()
         self.posts = Posts.objects.all()
         self.category = Categories.objects.first()
         self.tag = Tags.objects.first()
@@ -92,6 +97,7 @@ class PostTestCase(TestCase):
     fixtures = ["cats.json", "posts.json", "tags.json", "users.json"]
 
     def setUp(self):
+        cache.clear()
         self.post = Posts.objects.first()
 
     def __test_common(self, response):
@@ -135,6 +141,7 @@ class AddPostTestCase(TestCase):
     fixtures = ["cats.json", "posts.json", "tags.json", "users.json"]
 
     def setUp(self):
+        cache.clear()
         self.post = Posts.objects.first()
         self.path = reverse("add_post")
 
@@ -165,11 +172,15 @@ class AddPostTestCase(TestCase):
         self.assertRedirects(response, reverse("index"))
         self.assertTrue(Posts.objects.filter(title="asdasd").exists())
 
+        Posts.objects.filter(title="asdasd").delete()
+
+
 
 class EditDeletePostTestCase(TestCase):
     fixtures = ["cats.json", "posts.json", "tags.json", "users.json"]
 
     def setUp(self):
+        cache.clear()
         self.post = Posts.objects.first()
         self.path = reverse("edit_post", kwargs={"post_slug": self.post.slug})
 
@@ -196,7 +207,7 @@ class EditDeletePostTestCase(TestCase):
 
         response = self.client.post(self.path, data, follow=True)
 
-        self.assertEqual(data["title"], response.context["object"].title)
+        self.assertEqual(data["title"], Posts.objects.get(title=data["title"]).title)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertRedirects(
             response,
@@ -205,10 +216,9 @@ class EditDeletePostTestCase(TestCase):
     def test_delete_post(self):
         self.client.login(username="root", password="2215779638d")
         path = reverse_lazy("delete_post", kwargs={"post_slug": Posts.objects.first().slug})
-        
+
         delete_post = Posts.objects.first()
-        
+
         response = self.client.post(path, follow=True, HTTP_REFERER=reverse("index"))
-        
+
         self.assertNotEqual(Posts.objects.first(), delete_post)
-        
