@@ -56,7 +56,7 @@ class index(DataMixin, ListView):
     template_name = "main/index.html"
     context_object_name = "posts"
     selected = "index"
-    paginate_by = 5 # передает в шаблон page_obj - объект - текущую страницу, и paginator - объект пагинатор
+    paginate_by = 10 # передает в шаблон page_obj - объект - текущую страницу, и paginator - объект пагинатор
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
