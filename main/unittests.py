@@ -38,6 +38,10 @@ dict = {
     " ": "_",
 }
 
+def str_error(z):
+    if isinstance(z, str):
+        raise ValueError(f"{z}")
+
 
 class russian_in_english_test(unittest.TestCase):
 
@@ -46,12 +50,12 @@ class russian_in_english_test(unittest.TestCase):
         cls.word = "Никита"
         cls.eng_word = "Nikita"
 
-    #  def setUp(self):
-    #      print('setUp')
+   #  def setUp(self):
+   #      print('setUp')
 
     def test_russian_in_english_func(self):
         eng_func_word = utils.russian_in_english(self.word)
-        
+
         for i in [self.word, self.eng_word, eng_func_word]:
             with self.subTest(i=i):
                 self.assertIsInstance(i, str)
@@ -59,18 +63,27 @@ class russian_in_english_test(unittest.TestCase):
         self.assertTrue(set(self.word.lower()).issubset(list(dict.keys())))
         self.assertTrue(set(eng_func_word.lower()).issubset(list(dict.values())))
         self.assertTrue(set(self.eng_word.lower()).issubset(list(dict.values())))
-        
+
         self.assertEqual(self.eng_word.lower(), eng_func_word)
 
         for i in range(len(self.word)):
             with self.subTest(i=i):
                 self.assertEqual(self.eng_word[i].lower(), eng_func_word[i].lower())
 
-   #  def test_check1(self):
-   #      self.assertTrue("test_check1")
+        self.assertRaises(ValueError, str_error, "test_exc")
+        self.assertRaisesRegex(ValueError, "test*", str_error, "test_exc")
 
-   #  def test_check2(self):
-   #      self.assertTrue("test_check2")
+        self.assertCountEqual(["a", "b"], ["a", "b"])
+
+
+
+
+
+#  def test_check1(self):
+#      self.assertTrue("test_check1")
+
+#  def test_check2(self):
+#      self.assertTrue("test_check2")
 
 #  def tearDown(self):
 #      print('tearDown')
