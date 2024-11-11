@@ -1,5 +1,5 @@
 import unittest
-from . import utils
+from utils import russian_in_english
 import string
 
 dict = {
@@ -42,8 +42,24 @@ def str_error(z):
     if isinstance(z, str):
         raise ValueError(f"{z}")
 
+class auto():
+   def __init__(self,a,b):
+      self.a = a
+      self.b = b
+
 
 class russian_in_english_test(unittest.TestCase):
+
+    def compare_auto(self, a, b, msg=None):
+        if a.a != b.a:
+            if msg is None:
+                msg = 'my error'
+            self.fail(msg)
+
+    def print():
+        print('clean_up')       
+
+
 
     @classmethod
     def setUpClass(cls):
@@ -54,7 +70,7 @@ class russian_in_english_test(unittest.TestCase):
    #      print('setUp')
 
     def test_russian_in_english_func(self):
-        eng_func_word = utils.russian_in_english(self.word)
+        eng_func_word = russian_in_english(self.word)
 
         for i in [self.word, self.eng_word, eng_func_word]:
             with self.subTest(i=i):
@@ -75,15 +91,24 @@ class russian_in_english_test(unittest.TestCase):
 
         self.assertCountEqual(["a", "b"], ["a", "b"])
 
+        self.addTypeEqualityFunc(auto, "compare_auto")
 
+        a = auto(1,2)
+        b = auto(1, 10)
 
+        self.assertEqual(a, b, msg = 'asd')
 
+    def test_check1(self):
+         self.assertTrue("test_check1")
 
-#  def test_check1(self):
-#      self.assertTrue("test_check1")
+    def test_check2(self):
+         self.assertTrue("test_check2")
 
-#  def test_check2(self):
-#      self.assertTrue("test_check2")
+class check_sute(unittest.TestCase):
+
+    def test_check2(self):
+        self.assertTrue("test_check2")
+
 
 #  def tearDown(self):
 #      print('tearDown')
@@ -91,3 +116,13 @@ class russian_in_english_test(unittest.TestCase):
 #  @classmethod
 #  def tearDownClass(cls):
 #      print("tearDownClass")
+
+test_sute = unittest.TestSuite()
+
+test_sute.addTests([unittest.makeSuite(check_sute), unittest.makeSuite(russian_in_english_test)])
+
+runner = unittest.TextTestRunner()
+
+print(test_sute.countTestCases())
+
+runner.run(test_sute)
