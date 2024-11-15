@@ -1,6 +1,8 @@
 import unittest
-from utils import russian_in_english
+from main.utils import russian_in_english
 import string
+from unittest.mock import patch, MagicMock, call, PropertyMock, NonCallableMock
+
 
 dict = {
     "а": "a",
@@ -38,14 +40,47 @@ dict = {
     " ": "_",
 }
 
+class for_property_mock():
+   @property
+   def p(self):
+      return 'p_value'
+   @p.setter
+   def p(self, value):
+      return f'p_{value}'
+
+def test_mock(word):
+    if isinstance(word, str):
+        if set(word).issubset(set(dict.keys())):
+            auto_object_VW = auto.create_VW()
+            auto_object_VW.create(word, word)
+            if auto_object_VW.a == auto_object_VW.b == word:
+                return auto_object_VW.a
+            else:
+                return "auto_object.a != auto_object.b"
+        else:
+            raise ValueError("Слово должно быть написано по-русски")
+    else:
+        raise TypeError("Передаваемое слово должно быть объектом класса str")
+
+
 def str_error(z):
     if isinstance(z, str):
         raise ValueError(f"{z}")
 
-class auto():
-   def __init__(self,a,b):
-      self.a = a
-      self.b = b
+class VW:
+
+    def create(self, a, b):
+        self.a = a
+        self.b = b
+
+
+class auto:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+    def create_VW(self, a, b):
+       vw = VW()
 
 
 class russian_in_english_test(unittest.TestCase):
@@ -53,21 +88,16 @@ class russian_in_english_test(unittest.TestCase):
     def compare_auto(self, a, b, msg=None):
         if a.a != b.a:
             if msg is None:
-                msg = 'my error'
+                msg = "my error"
             self.fail(msg)
-
-    def print():
-        print('clean_up')       
-
-
 
     @classmethod
     def setUpClass(cls):
         cls.word = "Никита"
         cls.eng_word = "Nikita"
 
-   #  def setUp(self):
-   #      print('setUp')
+    #  def setUp(self):
+    #      print('setUp')
 
     def test_russian_in_english_func(self):
         eng_func_word = russian_in_english(self.word)
@@ -93,16 +123,56 @@ class russian_in_english_test(unittest.TestCase):
 
         self.addTypeEqualityFunc(auto, "compare_auto")
 
-        a = auto(1,2)
+        a = auto(1, 2)
         b = auto(1, 10)
 
-        self.assertEqual(a, b, msg = 'asd')
+        self.assertEqual(a, b, msg="asd")
 
-    def test_check1(self):
-         self.assertTrue("test_check1")
+    @patch("main.unittests.auto")
+    def test_mock(self,auto_mock):
 
-    def test_check2(self):
-         self.assertTrue("test_check2")
+        VW_mock = MagicMock(spec=VW)
+        print(VW_mock.create)
+        VW_mock.create.side_effect = lambda x,y: (x, y)
+        print(VW_mock.create(1, 22))
+        print(VW_mock.create.assert_has_calls([call(1,22)]))
+        VW_mock(1)
+        VW_mock(42)
+        VW_mock(a=123)
+        print(VW_mock.method_calls)
+        VW_mock.a = "слово"
+        #   VW_mock.create.return_value = 'asd'
+        #   VW_mock.create(1,2)
+        #   VW_mock.create.assert_called()
+        #   VW_mock.create.assert_called_with(1,2)
+        VW_mock.b = "слово"
+        auto_mock.create_VW.return_value = VW_mock
+        self.assertEqual(test_mock('слово'), "слово")
+
+    def test_property_mock(self):
+        s = {"method.return_value": 'asd1'}
+        mock = MagicMock(**s)
+        print(mock.method())
+        with patch('main.unittests.str_error', spec=str_error, name='asd') as str_error_mock:
+            mock.attach_mock(str_error_mock, "child1")
+            mock.child1()
+            print(mock.mock_calls)
+            mock.reset_mock()
+        str_error_mock = MagicMock(spec=str_error, name='asd')
+        mock.attach_mock(str_error_mock, 'child1')
+        mock.child1()
+        print(mock.mock_calls)
+        with patch('main.unittests.for_property_mock.p', new_callable=PropertyMock) as pr_mock:
+            pr_mock.return_value='prop_mock_get'
+            pr_mock = '123'
+            s = for_property_mock()
+            s.a = 15
+            print(s.a)
+            print(s.p)
+            s.p = 123
+
+        self.assertTrue("test_check2")
+
 
 class check_sute(unittest.TestCase):
 
@@ -117,12 +187,20 @@ class check_sute(unittest.TestCase):
 #  def tearDownClass(cls):
 #      print("tearDownClass")
 
-test_sute = unittest.TestSuite()
+# test_sute = unittest.TestSuite()
 
-test_sute.addTests([unittest.makeSuite(check_sute), unittest.makeSuite(russian_in_english_test)])
+# test_sute.addTests([unittest.makeSuite(check_sute), unittest.makeSuite(russian_in_english_test)])
 
-runner = unittest.TextTestRunner()
+# runner = unittest.TextTestRunner()
 
-print(test_sute.countTestCases())
+# print(test_sute.countTestCases())
 
-runner.run(test_sute)
+# runner.run(test_sute)
+
+if __name__ == "__main__":
+    print(__name__)
+    print("main")
+    unittest.main()
+else:
+    print(__name__)
+    print("import test")
