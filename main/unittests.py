@@ -63,6 +63,7 @@ def test_mock(word):
         raise TypeError("Передаваемое слово должно быть объектом класса str")
 
 
+
 def str_error(z):
     if isinstance(z, str):
         raise ValueError(f"{z}")
@@ -75,6 +76,8 @@ class VW:
 
 
 class auto:
+    dict = {}
+    
     def __init__(self, a, b):
         self.a = a
         self.b = b
@@ -85,6 +88,10 @@ class auto:
 
 class russian_in_english_test(unittest.TestCase):
 
+    def print_clean_up(*args):
+        print('clean_up')
+        pass
+
     def compare_auto(self, a, b, msg=None):
         if a.a != b.a:
             if msg is None:
@@ -93,8 +100,10 @@ class russian_in_english_test(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        cls.addClassCleanup(cls.print_clean_up)
         cls.word = "Никита"
         cls.eng_word = "Nikita"
+        print("setUpClass")
 
     #  def setUp(self):
     #      print('setUp')
@@ -176,7 +185,13 @@ class russian_in_english_test(unittest.TestCase):
 
 class check_sute(unittest.TestCase):
 
+    @patch.multiple("main.unittests.auto", dict=PropertyMock(return_value={'a':'a'}), create_VW=MagicMock(return_value='object'))
     def test_check2(self):
+        #   with patch.dict("main.unittests.auto.dict", {"a": 'asd', "b": 'asd'}) as pd:
+        #       print(pd)
+        #       print(auto(1, 2).dict)
+        z = auto(1,2)
+        print(z.dict, z.create_VW(), 'asd')
         self.assertTrue("test_check2")
 
 
