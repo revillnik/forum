@@ -26,4 +26,11 @@ jobs:
          pip install -r requirements.txt
       - name: test forum
         run: |
-         python3 manage.py test				
+         python3 manage.py test	
+  deploy:
+    needs: test_forum
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}	
+    steps:
+     - name: deploy
+       run: echo 'deploy'

@@ -10,6 +10,7 @@ class AboutTestCase(TestCase):
 
     def setUp(self):
         cache.clear()
+        
 
     def test_view(self):
         path = reverse("about")
@@ -173,7 +174,6 @@ class AddPostTestCase(TestCase):
         self.assertTrue(Posts.objects.filter(title="asdasd").exists())
 
         Posts.objects.filter(title="asdasd").delete()
-
 
 
 class EditDeletePostTestCase(TestCase):
