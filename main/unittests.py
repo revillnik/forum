@@ -1,8 +1,7 @@
 import unittest
 from main.utils import russian_in_english
 import string
-from unittest.mock import patch, MagicMock, call, PropertyMock, NonCallableMock
-
+from unittest.mock import patch, MagicMock, call, PropertyMock, NonCallableMock, mock_open, seal
 
 dict = {
     "а": "a",
@@ -63,10 +62,10 @@ def test_mock(word):
         raise TypeError("Передаваемое слово должно быть объектом класса str")
 
 
-
 def str_error(z):
     if isinstance(z, str):
         raise ValueError(f"{z}")
+
 
 class VW:
 
@@ -84,6 +83,9 @@ class auto:
 
     def create_VW(self, a, b):
        vw = VW()
+    
+    def print_wrap(self):
+       print('wrap')   
 
 
 class russian_in_english_test(unittest.TestCase):
@@ -141,14 +143,10 @@ class russian_in_english_test(unittest.TestCase):
     def test_mock(self,auto_mock):
 
         VW_mock = MagicMock(spec=VW)
-        print(VW_mock.create)
         VW_mock.create.side_effect = lambda x,y: (x, y)
-        print(VW_mock.create(1, 22))
-        print(VW_mock.create.assert_has_calls([call(1,22)]))
         VW_mock(1)
         VW_mock(42)
         VW_mock(a=123)
-        print(VW_mock.method_calls)
         VW_mock.a = "слово"
         #   VW_mock.create.return_value = 'asd'
         #   VW_mock.create(1,2)
@@ -161,23 +159,18 @@ class russian_in_english_test(unittest.TestCase):
     def test_property_mock(self):
         s = {"method.return_value": 'asd1'}
         mock = MagicMock(**s)
-        print(mock.method())
         with patch('main.unittests.str_error', spec=str_error, name='asd') as str_error_mock:
             mock.attach_mock(str_error_mock, "child1")
             mock.child1()
-            print(mock.mock_calls)
             mock.reset_mock()
         str_error_mock = MagicMock(spec=str_error, name='asd')
         mock.attach_mock(str_error_mock, 'child1')
         mock.child1()
-        print(mock.mock_calls)
         with patch('main.unittests.for_property_mock.p', new_callable=PropertyMock) as pr_mock:
             pr_mock.return_value='prop_mock_get'
             pr_mock = '123'
             s = for_property_mock()
             s.a = 15
-            print(s.a)
-            print(s.p)
             s.p = 123
 
         self.assertTrue("test_check2")
@@ -188,11 +181,18 @@ class check_sute(unittest.TestCase):
     @patch.multiple("main.unittests.auto", dict=PropertyMock(return_value={'a':'a'}), create_VW=MagicMock(return_value='object'))
     def test_check2(self):
         #   with patch.dict("main.unittests.auto.dict", {"a": 'asd', "b": 'asd'}) as pd:
-        #       print(pd)
-        #       print(auto(1, 2).dict)
         z = auto(1,2)
-        print(z.dict, z.create_VW(), 'asd')
         self.assertTrue("test_check2")
+
+    @patch("__main__.open", new_callable=mock_open, read_data='lalala')
+    def test_open_mock(self, m):
+        #   with patch("__main__.open", mock_open(read_data="lalalalal")) as m:
+        #       with m("file", "r") as file:
+        #           text_mock = file.read()
+        with m("file", "r") as file:
+            text_mock = file.read()
+        print(text_mock)
+        print(open, m)
 
 
 #  def tearDown(self):
