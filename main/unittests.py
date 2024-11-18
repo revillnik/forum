@@ -2,6 +2,7 @@ import unittest
 from main.utils import russian_in_english
 import string
 from unittest.mock import patch, MagicMock, call, PropertyMock, NonCallableMock, mock_open, seal
+from main.models import Posts
 
 dict = {
     "а": "a",
@@ -109,7 +110,6 @@ class russian_in_english_test(unittest.TestCase):
 
     #  def setUp(self):
     #      print('setUp')
-
     def test_russian_in_english_func(self):
         eng_func_word = russian_in_english(self.word)
 
