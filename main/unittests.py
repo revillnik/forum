@@ -2,7 +2,6 @@ import unittest
 from main.utils import russian_in_english
 import string
 from unittest.mock import patch, MagicMock, call, PropertyMock, NonCallableMock, mock_open, seal
-from main.models import Posts
 
 dict = {
     "а": "a",
